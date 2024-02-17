@@ -35,29 +35,34 @@ resource "aws_s3_bucket_acl" "bucket" {
 
 resource "aws_iam_policy" "policy" {
   name        = "my_policy"
-  path        = "/"
-  description = "My s3 policy"
+  description = "My S3 bucket policy"
+
   policy = jsonencode({
-    Version = "2012-10-17"
+    Version = "2012-10-17",
     Statement = [
       {
-        Effect   = "Allow"
-        Action = [
+        Effect    = "Allow",
+        Action    = [
+          "s3:ListBucket",
+          "s3:ListAllMyBuckets"
+        ],
+        Resource  = "*"
+      },
+      {
+        Effect    = "Allow",
+        Action    = [
         "s3:GetObject",
         "s3:PutObject",
-        "s3:DeleteObject",
-        "s3:ListBucket",
-        "s3:ListAllMyBuckets"
+        "s3:DeleteObject"
         ],
-    
-        Resource = [
-             aws_s3_bucket.bucket.arn,
-            "${aws_s3_bucket.bucket.arn}/*"
+        Resource  = [
+          aws_s3_bucket.bucket.arn,
+          "${aws_s3_bucket.bucket.arn}/*"
         ]
-      },
+      }
     ]
   })
-}  
+}
 
 resource "aws_iam_user_policy_attachment" "policy-attach" {
   user       = aws_iam_user.abhi_user.name
