@@ -10,11 +10,7 @@ resource "aws_iam_user_login_profile" "abhi_user_login_profile" {
  user    = aws_iam_user.abhi_user.name
 } 
 
-output "password" {
- value = aws_iam_user_login_profile.abhi_user_login_profile.password
-}   
-
-
+  
 resource "aws_s3_bucket" "bucket" {
    bucket = var.s3_bucket_name
 }
