@@ -1,9 +1,9 @@
 provider "aws" {
- region = "ap-south-1"
+ region = var.region
 }
 
 resource "aws_iam_user" "abhi_user" {
- name = "Abhi"
+  name = var.iam_user_name
 }
 
 resource "aws_iam_user_login_profile" "abhi_user_login_profile" {
@@ -16,7 +16,7 @@ output "password" {
 
 
 resource "aws_s3_bucket" "bucket" {
-  bucket = "my-teraform-bucket1234"
+   bucket = var.s3_bucket_name
 }
 
 resource "aws_s3_bucket_ownership_controls" "example" {
